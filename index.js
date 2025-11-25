@@ -80,6 +80,35 @@ app.get('/articles/:id', async (req, res) => {
     res.json(resp)
 })
 
+/**
+ * @openapi
+ * /articles/{id}:
+ *   put:
+ *     tags: [articles]
+ *     summary: Update article
+ *     parameters:
+ *      - name: id
+ *        in: path
+ *        required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Article"
+ *     responses:
+ *       200:
+ *         description: Updated
+ */
+app.put('/articles/:id', async (req, res) => {
+    const id = req.params.id;
+    const data = await prisma.article.update({
+        where: { id: id },
+        data: req.body
+    })
+    res.status(200).json({ success: true })
+})
+
 // Swagger UI
 import setupSwagger from './swagger.js'
 if (process.env.NODE_ENV !== "production") {
