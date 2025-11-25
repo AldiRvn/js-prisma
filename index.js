@@ -48,6 +48,38 @@ app.post('/articles', async (req, res) => {
     res.status(201).json({ success: true })
 })
 
+/**
+ * @openapi
+ * /articles/{id}:
+ *   get:
+ *     tags: [articles]
+ *     summary: Get Articles
+ *     parameters:
+ *      - name: id
+ *        in: path
+ *        required: false
+ *     responses:
+ *       200:
+ *         description: []
+ */
+app.get('/articles/:id', async (req, res) => {
+    let resp = {}
+    const id = req.params.id
+    console.log(id);
+    if (id !== "{id}") { //? Terjadi ketika param path id tidak di isi dan tidak required
+        //? 1. data by id
+        resp = await prisma.article.findFirst({
+            where: { id: req.params.id }
+        })
+    } else {
+        //? 2. data by non id field
+        resp = await prisma.article.findMany({
+            where: { state: 'DRAFT' }
+        })
+    }
+    res.json(resp)
+})
+
 // Swagger UI
 import setupSwagger from './swagger.js'
 if (process.env.NODE_ENV !== "production") {
