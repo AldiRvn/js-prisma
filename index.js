@@ -101,12 +101,37 @@ app.get('/articles/:id', async (req, res) => {
  *         description: Updated
  */
 app.put('/articles/:id', async (req, res) => {
+    delete req.body.id
     const id = req.params.id;
     const data = await prisma.article.update({
         where: { id: id },
         data: req.body
     })
-    res.status(200).json({ success: true })
+    res.status(200).json(data)
+})
+
+/**
+ * @openapi
+ * /articles/{id}:
+ *   delete:
+ *     tags: [articles]
+ *     summary: Delete article
+ *     parameters:
+ *      - name: id
+ *        in: path
+ *        required: true
+ *     responses:
+ *       200:
+ *         description: Deleted
+ */
+app.delete('/articles/:id', async (req, res) => {
+    const data = await prisma.article.delete({
+        where: { id: req.params.id }
+    })
+    res.status(200).json(data)
+
+    //! multi delete syntax, count = total deleted data
+    // const count = prisma.article.deleteMany({where:{status:'archive'}})
 })
 
 // Swagger UI
