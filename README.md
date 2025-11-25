@@ -18,3 +18,8 @@ docker run \
 ```
 
 - `npx prisma migrate dev`
+- `npx prisma studio`
+- `npx prisma generate`
+- `npm i body-parser`
+- `npm i -D prisma-json-schema-generator swagger-jsdoc`
+- `npm i swagger-ui-express`

@@ -5,9 +5,14 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
+
+generator jsonSchema {
+  provider = "prisma-json-schema-generator"
+}
+
 
 datasource db {
   provider = "mysql"
@@ -20,6 +25,8 @@ enum ArticleState {
 }
 
 model Article {
+  @@map("article") // Set/Update Table Name
+
   id String @id @default(cuid())
   title String
   content String
