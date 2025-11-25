@@ -14,5 +14,8 @@
   "dependencies": {
     "express": "^5.1.0",
     "nodemon": "^3.1.11"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.0"
   }
 }
