@@ -3,7 +3,9 @@ import bodyParser from "body-parser"
 //? Karena mode JS, pastikan prisma/schema.prisma menggunakan provider prisma-client-js
 import { PrismaClient } from "./generated/prisma/client.js"
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+    log: ["query"]
+})
 
 const app = express()
 app.use(bodyParser.json())
